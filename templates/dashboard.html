@@ -29,31 +29,63 @@
             </button>
 
             <form id="addPatientForm" action="{{ url_for('add_patient') }}" method="POST"
-                class="hidden flex-col space-y-3 mt-4">
-                <input type="text" name="uhid" placeholder="UHID (Medical Record Number)" required
-                    class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
-                <input type="text" name="first_name" placeholder="First Name" required
-                    class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
-                <input type="text" name="last_name" placeholder="Last Name" required
-                    class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                class="hidden flex-col space-y-4 mt-4">
+                <div>
+                    <label class="block text-gray-700 text-xs font-bold mb-1 ml-1">UHID / MRN</label>
+                    <input type="text" name="uhid" placeholder="Medical Record Number" required
+                        class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-gray-700 text-xs font-bold mb-1 ml-1">First Name</label>
+                        <input type="text" name="first_name" placeholder="First Name" required
+                            class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-xs font-bold mb-1 ml-1">Last Name</label>
+                        <input type="text" name="last_name" placeholder="Last Name" required
+                            class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                    </div>
+                </div>
 
-                <input type="date" name="dob" placeholder="Date of Birth"
-                    class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
-                <select name="gender"
-                    class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
-                    <option value="" disabled selected>Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                </select>
-                <input type="text" name="address" placeholder="Address"
-                    class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
-                <input type="tel" name="phone" placeholder="Phone Number"
-                    class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
-                <input type="email" name="email" placeholder="Email"
-                    class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                <div>
+                    <label class="block text-gray-700 text-xs font-bold mb-1 ml-1">Date of Birth</label>
+                    <input type="date" name="dob" required
+                        class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent min-h-[42px]">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 text-xs font-bold mb-1 ml-1">Gender</label>
+                    <select name="gender"
+                        class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                        <option value="" disabled selected>Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 text-xs font-bold mb-1 ml-1">Address</label>
+                    <input type="text" name="address" placeholder="Address"
+                        class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-gray-700 text-xs font-bold mb-1 ml-1">Phone Number</label>
+                        <input type="tel" name="phone" placeholder="Phone Number"
+                            class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-xs font-bold mb-1 ml-1">Email</label>
+                        <input type="email" name="email" placeholder="Email"
+                            class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                    </div>
+                </div>
+
                 <button type="submit"
-                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition-colors duration-200">
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-md focus:outline-none focus:shadow-outline transition-colors duration-200 w-full mt-2">
                     Save Patient
                 </button>
             </form>
