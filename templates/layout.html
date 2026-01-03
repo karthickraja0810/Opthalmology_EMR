@@ -177,12 +177,35 @@
 
         @media (max-width: 768px) {
             .nav-link {
-                margin: 0 0.5rem;
-                font-size: 0.9rem;
+                margin: 0.5rem 0;
+                font-size: 1.1rem;
+                width: 100%;
+                text-align: center;
             }
 
             .user-info {
                 display: none;
+            }
+
+            .mobile-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+                padding: 1rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                z-index: 100;
+            }
+
+            .mobile-menu.active {
+                display: flex;
+            }
+
+            .main-container {
+                padding: 1.5rem;
             }
         }
     </style>
@@ -193,13 +216,20 @@
     <div class="floating-element element-1"></div>
     <div class="floating-element element-2"></div>
 
-    <nav class="nav-gradient p-4 text-white shadow-lg">
+    <nav class="nav-gradient p-4 text-white shadow-lg relative">
         <div class="container mx-auto flex justify-between items-center">
             <a href="{{ url_for('dashboard') }}" class="text-2xl font-bold tracking-wide logo">OphthaEMR</a>
-            <div class="flex items-center space-x-4">
+
+            <!-- Hamburger Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-4">
                 {# Display user info and navigation ONLY if user is logged in #}
                 {% if session.get('user_id') %}
-                <span class="text-blue-100 user-info hidden md:inline">Logged in as: {{ session['username'] }} ({{
+                <span class="text-blue-100 user-info">Logged in as: {{ session['username'] }} ({{
                     session['user_role'] | title }})</span>
                 {# Show specific links if not admin OR if admin and on admin panel (to prevent showing patient links) #}
                 {% if session['user_role'] != 'admin' %}
@@ -212,6 +242,22 @@
                 <a href="{{ url_for('login') }}" class="btn-primary text-white py-2 px-4 rounded-md">Login</a>
                 {% endif %}
             </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden">
+            {% if session.get('user_id') %}
+            <div class="text-blue-100 text-sm mb-4 text-center">Logged in as: {{ session['username'] }}</div>
+            {% if session['user_role'] != 'admin' %}
+            <a href="{{ url_for('dashboard') }}" class="nav-link block">Dashboard</a>
+            <a href="{{ url_for('analytics') }}" class="nav-link block">Analytics</a>
+            {% endif %}
+            <a href="{{ url_for('logout') }}"
+                class="btn-primary text-white py-2 px-4 rounded-md text-center block mt-2">Logout</a>
+            {% else %}
+            <a href="{{ url_for('login') }}"
+                class="btn-primary text-white py-2 px-4 rounded-md text-center block">Login</a>
+            {% endif %}
         </div>
     </nav>
 
@@ -279,6 +325,29 @@
                         }
                     });
                 }, 1000);
+            }
+            // Mobile menu toggle
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('active');
+                    const icon = menuBtn.querySelector('i');
+                    if (mobileMenu.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                        gsap.from('#mobile-menu', {
+                            height: 0,
+                            opacity: 0,
+                            duration: 0.3,
+                            ease: "power2.out"
+                        });
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
             }
         });
     </script>

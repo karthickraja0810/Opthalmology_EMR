@@ -290,11 +290,14 @@
     @media (max-width: 768px) {
         .login-container {
             flex-direction: column;
-            max-width: 400px;
+            width: 100%;
+            max-width: 450px;
+            min-height: auto;
         }
 
         .login-left {
             padding: 30px;
+            min-height: 250px;
         }
 
         .login-right {
@@ -302,7 +305,29 @@
         }
 
         .welcome-title {
-            font-size: 26px;
+            font-size: 24px;
+        }
+
+        .welcome-text {
+            font-size: 14px;
+        }
+
+        .login-title {
+            font-size: 22px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
+            padding: 10px;
+        }
+
+        .login-left {
+            padding: 20px;
+        }
+
+        .login-right {
+            padding: 20px;
         }
     }
 </style>
