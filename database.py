@@ -181,6 +181,12 @@ def ensure_columns():
                 IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='patient_medical_records' AND column_name='updated_at') THEN
                     ALTER TABLE patient_medical_records ADD COLUMN updated_at TIMESTAMP DEFAULT NOW();
                 END IF;
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='patients' AND column_name='created_at') THEN
+                    ALTER TABLE patients ADD COLUMN created_at TIMESTAMP DEFAULT NOW();
+                END IF;
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='patients' AND column_name='updated_at') THEN
+                    ALTER TABLE patients ADD COLUMN updated_at TIMESTAMP DEFAULT NOW();
+                END IF;
             END$$;
         """)
 
@@ -259,7 +265,9 @@ def create_tables():
                 gender VARCHAR(10),
                 address TEXT,
                 phone VARCHAR(20),
-                email VARCHAR(100)
+                email VARCHAR(100),
+                created_at TIMESTAMP DEFAULT NOW(),
+                updated_at TIMESTAMP DEFAULT NOW()
             );
         """)
         print("Table 'patients' ensured.")
@@ -280,6 +288,7 @@ def create_tables():
                 risk_assessment_score INTEGER,
                 risk_assessment_category VARCHAR(50),
                 risk_assessment_implication TEXT,
+                prescription_details JSONB,
                 created_by INTEGER,
                 created_at TIMESTAMP DEFAULT NOW(),
                 updated_at TIMESTAMP DEFAULT NOW()
@@ -373,6 +382,7 @@ if __name__ == '__main__':
     create_tables()
     ensure_uhid_column()
     ensure_prescription_columns() # CRITICAL: Ensure existing installations get the new columns
+    ensure_columns()
 
 
 
