@@ -2708,12 +2708,14 @@ def prescription_page(uhid):
 
 
 if __name__ == '__main__':
-    # Imports for database functions (ensure database.py is in the same directory)
     from database import create_tables, ensure_columns
     
     with app.app_context():
-        # 🚨 This is the key startup sequence:
-        create_tables() # Ensure all base tables exist
-        ensure_columns() # Ensure the new 'prescription_details' column exists in patient_medical_records
+        create_tables() 
+        ensure_columns() 
     
-    app.run(debug=True)
+    # Render provides a 'PORT' environment variable. 
+    # If it's not found (like on your Mac), it defaults to 5000.
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
