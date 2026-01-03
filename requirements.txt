@@ -11,3 +11,4 @@ requests
 # Automation Testing
 playwright
 asyncio
+gunicorn
