@@ -84,19 +84,6 @@ def record_order(entry):
     history.insert(0, entry)
     save_history(history)
 
-
-# def get_db_connection():
-#     """Establishes and returns a connection to the PostgreSQL database."""
-#     conn = None
-#     try:
-#         conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASS)
-#         return conn
-#     except psycopg2.Error as e:
-#         print(f"Database connection error: {e}")
-#         flash("Database connection error. Please try again later.", "error")
-#         return None
-    
-# --- Test Categories from Laboratory Management System ---
 TEST_CATEGORIES = {
     'biochemistry': {
         'Kidney Function': ['GLU', 'UREA', 'CREATININE'],

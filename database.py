@@ -2,10 +2,9 @@ import psycopg2
 import psycopg2.extras # Needed for DictCursor in app.py
 from werkzeug.security import generate_password_hash
 import uuid 
-
+import os 
 # This reads the secret URL you put in the Render Dashboard
-DATABASE_URL = os.environ.get('postgresql://neondb_owner:npg_cjeKTJD60vqA@ep-solitary-resonance-a47vxpfa-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require')
-
+DATABASE_URL = os.environ.get('DATABASE_URL')
 def get_db_connection():
     try:
         if DATABASE_URL:
