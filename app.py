@@ -17,6 +17,7 @@ import time
 from flask import render_template_string, send_from_directory
 import secrets
 from database import get_db_connection
+from database import create_tables, ensure_columns
 
 
 # This is a sample host for an external service. In a real application, this should be in a config file.
@@ -84,16 +85,16 @@ def record_order(entry):
     save_history(history)
 
 
-def get_db_connection():
-    """Establishes and returns a connection to the PostgreSQL database."""
-    conn = None
-    try:
-        conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASS)
-        return conn
-    except psycopg2.Error as e:
-        print(f"Database connection error: {e}")
-        flash("Database connection error. Please try again later.", "error")
-        return None
+# def get_db_connection():
+#     """Establishes and returns a connection to the PostgreSQL database."""
+#     conn = None
+#     try:
+#         conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASS)
+#         return conn
+#     except psycopg2.Error as e:
+#         print(f"Database connection error: {e}")
+#         flash("Database connection error. Please try again later.", "error")
+#         return None
     
 # --- Test Categories from Laboratory Management System ---
 TEST_CATEGORIES = {
@@ -2708,15 +2709,18 @@ def prescription_page(uhid):
         if conn: conn.close()    
 
 
-if __name__ == '__main__':
-    from database import create_tables, ensure_columns
-    
-    with app.app_context():
+with app.app_context():
+    try:
         create_tables() 
-        ensure_columns() 
-    
-    # Render provides a 'PORT' environment variable. 
-    # If it's not found (like on your Mac), it defaults to 5000.
+        ensure_columns()
+        print("✅ Database initialized and tables verified.")
+    except Exception as e:
+        print(f"⚠️ Startup Database Setup Warning: {e}")
+
+# --- KEEP YOUR ROUTES HERE ---
+
+# --- THE MAIN BLOCK (Only for local Mac use) ---
+if __name__ == '__main__':
     import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
