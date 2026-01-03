@@ -3,19 +3,24 @@ import psycopg2.extras # Needed for DictCursor in app.py
 from werkzeug.security import generate_password_hash
 import uuid 
 
-# Database Configuration (Match these with app.py)
-DB_HOST = "localhost"
-DB_NAME = "postgres"
-DB_USER = "postgres"
-DB_PASS = "karthi"
+# This reads the secret URL you put in the Render Dashboard
+DATABASE_URL = os.environ.get('DATABASE_URL')
 
 def get_db_connection():
-    """Establishes a connection to the PostgreSQL database."""
     try:
-        conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASS)
-        return conn
-    except psycopg2.Error as e:
-        print(f"Database connection failed: {e}")
+        if DATABASE_URL:
+            # Use this on Render
+            return psycopg2.connect(DATABASE_URL)
+        else:
+            # Use this for local testing on your Mac
+            return psycopg2.connect(
+                host="localhost",
+                database="postgres",
+                user="postgres",
+                password="karthi"
+            )
+    except Exception as e:
+        print(f"Connection failed: {e}")
         return None
 
 def ensure_uhid_column():

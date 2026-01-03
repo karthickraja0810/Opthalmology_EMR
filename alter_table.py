@@ -1,17 +1,18 @@
 import psycopg2
+from database import get_db_connection
 
 # Database Configuration (Make sure this matches your app.py)
-DB_HOST = "localhost"
-DB_NAME = "postgres"
-DB_USER = "postgres"
-DB_PASS = "karthi"
+# DB_HOST = "localhost"
+# DB_NAME = "postgres"
+# DB_USER = "postgres"
+# DB_PASS = "karthi"
 
 def alter_patient_edit_history_table():
     """Connects to the database and alters the patient_edit_history table to allow NULL patient_id."""
     conn = None
     try:
         # Establish a connection to the database
-        conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASS)
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         # SQL command to alter the table

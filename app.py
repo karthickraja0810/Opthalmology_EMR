@@ -16,6 +16,7 @@ import requests
 import time
 from flask import render_template_string, send_from_directory
 import secrets
+from database import get_db_connection
 
 
 # This is a sample host for an external service. In a real application, this should be in a config file.
@@ -34,10 +35,10 @@ app.secret_key = secrets.token_hex(16)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_PERMANENT'] = True
 # Database Configuration
-DB_HOST = "localhost"
-DB_NAME = "postgres"
-DB_USER = "postgres"
-DB_PASS = "karthi"
+# DB_HOST = "localhost"
+# DB_NAME = "postgres"
+# DB_USER = "postgres"
+# DB_PASS = "karthi"
 
 # Create a 'downloads' directory to store the test reports
 os.makedirs("downloads", exist_ok=True)

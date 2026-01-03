@@ -1,18 +1,19 @@
 import psycopg2
 import ast
 import json
+from database import get_db_connection
 
 # Database Configuration (Make sure this matches your app.py)
-DB_HOST = "localhost"
-DB_NAME = "postgres"
-DB_USER = "postgres"
-DB_PASS = "karthi"
+# DB_HOST = "localhost"
+# DB_NAME = "postgres"
+# DB_USER = "postgres"
+# DB_PASS = "karthi"
 
 def migrate_test_results():
     """Migrates old, improperly formatted test_results strings to valid JSONB."""
     conn = None
     try:
-        conn = psycopg2.connect(host=DB_HOST, database=DB_NAME, user=DB_USER, password=DB_PASS)
+        conn = get_db_connection()
         cursor = conn.cursor()
 
         print("Fetching records with potential legacy data...")
