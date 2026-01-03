@@ -1,0 +1,13 @@
+# Core Web Framework
+Flask
+Werkzeug
+
+# Database Connection
+psycopg2-binary
+
+# External API Requests
+requests
+
+# Automation Testing
+playwright
+asyncio
